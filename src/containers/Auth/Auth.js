@@ -13,29 +13,18 @@ export default class Auth extends Component {
         type: 'email',
         autocomplete: 'username',
         label: 'Login',
-        errorMessage: 'Имя пользователя или пароль введены не верно',
-        valid: false,
-        touched: false,
-        validation: {
-          required: true,
-          email: true,
-        }
       },
       password: {
-        value: '',
+        value: '12345',
         type: 'password',
         autocomplete: 'current-password',
-        label: 'Password',
-        errorMessage: 'Имя пользователя или пароль введены не верно',
-        valid: false,
-        touched: false,
-        validation: {
-          required: true,
-          minLength: 6,
-        }
+        label: 'Password',        
       },
     },
+    login: 'admin',
+    password: '12345',
     isFormValid: false,
+    errorMessage: 'Имя пользователя или пароль введены не верно',
   }
 
   render() {
@@ -44,7 +33,9 @@ export default class Auth extends Component {
         <div>
           <h1>Login, please</h1>
           <form className={classes.AuthForm}>
-            <Input></Input>
+            <Input
+              value={this.state.formControls.login.value}
+            ></Input>
             <Button>
               Login
             </Button>

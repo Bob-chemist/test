@@ -4,7 +4,8 @@ import classes from './News.module.sass'
 const News = props => {
   return (
     <div className={classes.News}>
-      hello
+      News page
+      {props.children}
     </div>
   )
 }
