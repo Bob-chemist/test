@@ -1,13 +1,38 @@
-import React from 'react'
-import classes from './News.module.sass'
+import React, { Component } from 'react';
+import classes from './News.module.sass';
+import Content from '../../components/Content/Content'
 
-const News = props => {
-  return (
-    <div className={classes.News}>
-      News page
-      {props.children}
-    </div>
-  )
+export default class News extends Component {
+  state = {
+    news: [
+      {
+        title: 'Книги: Н. Стивенсон. Анафем',
+        text: 'Мы тут в течение месяца читали научно-фантастическую книгу некоего Нила Стивенсона под названием «Анафем». Так как книга претендует на раскрытие темы науки и философии, мы взяли на себя смелость написать кое-какие впечатления от сего произведения.',
+      },
+      {
+        title: 'Модель Вселенной',
+        text: 'Пару лет назад какой-то мужик из этих ихних лабораторий запилил на суперкомпьютере модель развития Вселенной на основании имеющихся у нас на сегодня данных. Ну то есть он взял параметры Большого Взрыва и смоделировал развитие вселенной по известным формулам и теориям. Это была довольно точная и обширная модель - гигантские расчеты проводились в кубе с поперечником в 350 млн. световых лет. В итоге получилась симпатичная Вселенная, очень даже похожая на реальную. ',
+      },
+    ]
+  }
+
+  renderContent() {
+    return this.state.news.map((article, index) => {      
+      return (
+        <Content 
+          key={index}
+          title={article.title}
+          text={article.text}
+        />
+      )
+    })
+  }
+  
+  render() {
+    return (
+      <div className={classes.News}>
+        {this.renderContent()}
+      </div>
+    )
+  }
 }
-
-export default News

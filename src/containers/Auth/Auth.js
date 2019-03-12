@@ -10,21 +10,67 @@ export default class Auth extends Component {
     formControls: {
       login: {
         value: '',
-        type: 'email',
+        type: 'text',
         autocomplete: 'username',
         label: 'Login',
       },
       password: {
-        value: '12345',
+        value: '',
         type: 'password',
         autocomplete: 'current-password',
         label: 'Password',        
       },
     },
-    login: 'admin',
+    login: 'Admin',
     password: '12345',
-    isFormValid: false,
+    loggedIn: false,
     errorMessage: 'Имя пользователя или пароль введены не верно',
+  }
+
+  onChangeHandler(event, controlName) {
+    const formControls = {...this.state.formControls};
+    const control = {...formControls[controlName]};
+
+    control.value = event.target.value;   
+
+    formControls[controlName] = control;
+    
+    this.setState({
+      formControls,    
+    });
+  }
+  
+  submitHandler = event => {
+    event.preventDefault()
+  }
+
+  loginHandler = async () => {
+    const authData = {
+      login: this.state.formControls.login.value,
+      password: this.state.formControls.password.value,
+    }  
+    
+    if (authData.login === this.state.login && authData.password === this.state.password) {
+      await this.setState({
+        loggedIn: true,
+      });
+    }
+  }
+
+  renderInput() {
+    return Object.keys(this.state.formControls).map((control, index) => {
+      const field = this.state.formControls[control];
+      return (
+        <Input
+          key={index}
+          value={field.value}
+          type={field.type}
+          autocomplete={field.autocomplete}
+          label={field.label}
+          onChange={event => this.onChangeHandler(event, control)}
+        />
+      )
+    })
   }
 
   render() {
@@ -32,11 +78,11 @@ export default class Auth extends Component {
       <div className={classes.Auth}>
         <div>
           <h1>Login, please</h1>
-          <form className={classes.AuthForm}>
-            <Input
-              value={this.state.formControls.login.value}
-            ></Input>
-            <Button>
+          <form onSubmit={this.submitHandler} className={classes.AuthForm}>
+            {this.renderInput()}
+            <Button
+              onClick={this.loginHandler}
+            >
               Login
             </Button>
           </form>
