@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import classes from './Auth.module.sass';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import {connect} from 'react-redux'
 
 
-export default class Auth extends Component {
+class Auth extends Component {
 
   state = {
     formControls: {
@@ -22,9 +23,8 @@ export default class Auth extends Component {
       },
     },
     login: 'Admin',
-    password: '12345',
-    loggedIn: false,
-    errorMessage: 'Имя пользователя или пароль введены не верно',
+    password: '12345',    
+    errorMessage: '',
   }
 
   onChangeHandler(event, controlName) {
@@ -36,7 +36,8 @@ export default class Auth extends Component {
     formControls[controlName] = control;
     
     this.setState({
-      formControls,    
+      formControls,
+      errorMessage: '',   
     });
   }
   
@@ -44,17 +45,19 @@ export default class Auth extends Component {
     event.preventDefault()
   }
 
-  loginHandler = async () => {
+  loginHandler = () => {
     const authData = {
       login: this.state.formControls.login.value,
       password: this.state.formControls.password.value,
     }  
     
     if (authData.login === this.state.login && authData.password === this.state.password) {
-      await this.setState({
-        loggedIn: true,
-      });
+      return this.props.login();
     }
+    this.setState({
+      errorMessage: 'Имя пользователя или пароль введены не верно',
+    }) ;
+     
   }
 
   renderInput() {
@@ -80,6 +83,11 @@ export default class Auth extends Component {
           <h1>Login, please</h1>
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInput()}
+            {/* {
+              isInvalid(props) ? <span>{this.state.errorMessage || "Enter proper values"}</span>
+              : null
+            }   */}
+            <span className={classes.Error}>{this.state.errorMessage}</span><br/>
             <Button
               onClick={this.loginHandler}
             >
@@ -91,3 +99,11 @@ export default class Auth extends Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    login: () => dispatch({type: 'LOGIN'})
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Auth)

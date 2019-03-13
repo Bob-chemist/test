@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
 import classes from './News.module.sass';
-import Content from '../../components/Content/Content'
+import Content from '../../components/Content/Content';
+import {connect} from 'react-redux';
 
-export default class News extends Component {
-  state = {
-    news: [
-      {
-        title: 'Книги: Н. Стивенсон. Анафем',
-        text: 'Мы тут в течение месяца читали научно-фантастическую книгу некоего Нила Стивенсона под названием «Анафем». Так как книга претендует на раскрытие темы науки и философии, мы взяли на себя смелость написать кое-какие впечатления от сего произведения.',
-      },
-      {
-        title: 'Модель Вселенной',
-        text: 'Пару лет назад какой-то мужик из этих ихних лабораторий запилил на суперкомпьютере модель развития Вселенной на основании имеющихся у нас на сегодня данных. Ну то есть он взял параметры Большого Взрыва и смоделировал развитие вселенной по известным формулам и теориям. Это была довольно точная и обширная модель - гигантские расчеты проводились в кубе с поперечником в 350 млн. световых лет. В итоге получилась симпатичная Вселенная, очень даже похожая на реальную. ',
-      },
-    ]
-  }
-
+class News extends Component {
+  
   renderContent() {
-    return this.state.news.map((article, index) => {      
+    return this.props.news.map((article, index) => {      
       return (
         <Content 
           key={index}
@@ -31,8 +20,18 @@ export default class News extends Component {
   render() {
     return (
       <div className={classes.News}>
+        <h1>News</h1>
         {this.renderContent()}
       </div>
     )
   }
 }
+
+
+function mapStateToProps(state) {  
+  return {
+    news: state.news.news
+  }
+}
+
+export default connect(mapStateToProps)(News);
