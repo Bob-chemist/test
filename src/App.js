@@ -6,6 +6,7 @@ import Main from './containers/Main/Main';
 import Profile from './containers/Profile/Profile'
 import Layout from './hoc/Layout/Layout';
 import {connect} from 'react-redux';
+import NotFound from './containers/NotFound/NotFound'
 
 
 class App extends Component {
@@ -30,7 +31,8 @@ class App extends Component {
               ) 
             }
           />
-          <Route path={'/'} component={Main}/>
+          <Route path={'/'} exact component={Main}/>
+          <Route path='*' component={NotFound} />
         </Switch>
       </Layout>      
     );
