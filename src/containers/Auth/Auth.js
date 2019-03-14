@@ -42,7 +42,7 @@ class Auth extends Component {
   }
   
   submitHandler = event => {
-    event.preventDefault()
+    event.preventDefault();
   }
 
   loginHandler = () => {
@@ -56,7 +56,7 @@ class Auth extends Component {
     }
     this.setState({
       errorMessage: 'Имя пользователя или пароль введены не верно',
-    }) ;
+    });
      
   }
 
@@ -83,10 +83,7 @@ class Auth extends Component {
           <h1>Login, please</h1>
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInput()}
-            {/* {
-              isInvalid(props) ? <span>{this.state.errorMessage || "Enter proper values"}</span>
-              : null
-            }   */}
+            
             <span className={classes.Error}>{this.state.errorMessage}</span><br/>
             <Button
               onClick={this.loginHandler}

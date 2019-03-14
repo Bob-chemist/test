@@ -32,7 +32,7 @@ class App extends Component {
             }
           />
           <Route path={'/'} exact component={Main}/>
-          <Route path='*' component={NotFound} />
+          <Route component={NotFound}/>
         </Switch>
       </Layout>      
     );
