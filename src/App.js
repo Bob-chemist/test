@@ -31,6 +31,14 @@ class App extends Component {
               ) 
             }
           />
+          {/* Only for deployment on Github Pages */}
+          <Route 
+            path={'/test'} 
+            render={ () => ( 
+              <Redirect to={'/'}/>
+              ) 
+            }
+          />
           <Route path={'/'} exact component={Main}/>
           <Route component={NotFound}/>
         </Switch>
