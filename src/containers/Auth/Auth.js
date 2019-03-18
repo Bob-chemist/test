@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import classes from './Auth.module.sass';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
-import {connect} from 'react-redux'
-
+import { connect } from 'react-redux';
 
 class Auth extends Component {
-
   state = {
     formControls: {
       login: {
@@ -19,46 +17,48 @@ class Auth extends Component {
         value: '',
         type: 'password',
         autocomplete: 'current-password',
-        label: 'Password',        
+        label: 'Password',
       },
     },
     login: 'Admin',
-    password: '12345',    
+    password: '12345',
     errorMessage: '',
-  }
+  };
 
   onChangeHandler(event, controlName) {
-    const formControls = {...this.state.formControls};
-    const control = {...formControls[controlName]};
+    const formControls = { ...this.state.formControls };
+    const control = { ...formControls[controlName] };
 
-    control.value = event.target.value;   
+    control.value = event.target.value;
 
     formControls[controlName] = control;
-    
+
     this.setState({
       formControls,
-      errorMessage: '',   
+      errorMessage: '',
     });
   }
-  
+
   submitHandler = event => {
     event.preventDefault();
-  }
+  };
 
   loginHandler = () => {
     const authData = {
       login: this.state.formControls.login.value,
       password: this.state.formControls.password.value,
-    }  
-    
-    if (authData.login === this.state.login && authData.password === this.state.password) {
+    };
+
+    if (
+      authData.login === this.state.login &&
+      authData.password === this.state.password
+    ) {
       return this.props.login();
     }
     this.setState({
       errorMessage: 'Имя пользователя или пароль введены не верно',
     });
-     
-  }
+  };
 
   renderInput() {
     return Object.keys(this.state.formControls).map((control, index) => {
@@ -72,8 +72,8 @@ class Auth extends Component {
           label={field.label}
           onChange={event => this.onChangeHandler(event, control)}
         />
-      )
-    })
+      );
+    });
   }
 
   render() {
@@ -83,24 +83,24 @@ class Auth extends Component {
           <h1>Login, please</h1>
           <form onSubmit={this.submitHandler} className={classes.AuthForm}>
             {this.renderInput()}
-            
-            <span className={classes.Error}>{this.state.errorMessage}</span><br/>
-            <Button
-              onClick={this.loginHandler}
-            >
-              Login
-            </Button>
+
+            <span className={classes.Error}>{this.state.errorMessage}</span>
+            <br />
+            <Button onClick={this.loginHandler}>Login</Button>
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: () => dispatch({type: 'LOGIN'})
-  }
+    login: () => dispatch({ type: 'LOGIN' }),
+  };
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(
+  null,
+  mapDispatchToProps
+)(Auth);

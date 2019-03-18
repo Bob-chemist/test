@@ -1,8 +1,7 @@
 import React from 'react';
-import classes from './Input.module.sass'
+import classes from './Input.module.sass';
 
 const Input = props => {
-
   const inputType = props.type || 'text';
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
@@ -10,7 +9,7 @@ const Input = props => {
   return (
     <div className={cls.join(' ')}>
       <label htmlFor={htmlFor}>{props.label}</label>
-      <input 
+      <input
         type={inputType}
         id={htmlFor}
         value={props.value}
@@ -23,7 +22,7 @@ const Input = props => {
         : null
       }       */}
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;
